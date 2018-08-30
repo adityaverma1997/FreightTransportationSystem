@@ -1,0 +1,241 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package adminui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.table.DefaultTableModel;
+import model.dao.DriverInfoDAO;
+import model.to.DriverInfo;
+import reports.JasperReportGenerator;
+import sound.ProSound;
+import specificreports.SpecificDriver;
+import utility.CommonOperations;
+
+/**
+ *
+ * @author ADITYA
+ */
+public class ViewDrivers extends javax.swing.JInternalFrame {
+
+    List<DriverInfo> drivers;
+    private JPopupMenu popup;
+    private int row;
+
+    public ViewDrivers() {
+        initComponents();
+        bindTables();
+        popup = new JPopupMenu();
+        JMenuItem deleteitem = new JMenuItem("Delete this record");
+        JMenuItem edititem = new JMenuItem("Edit this record");
+        popup.add(deleteitem);
+        popup.add(edititem);
+        deleteitem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleterecord();
+            }
+        });
+        edititem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editrecord();
+            }
+        });
+        row = -1;
+        try {
+            ImageIcon icon, icone;
+            icon = new ImageIcon(getClass().getResource("/adminui/delete.png"));
+            icone = new ImageIcon(getClass().getResource("/adminui/edit.png"));
+            edititem.setIcon(icone);
+            deleteitem.setIcon(icon);
+        } catch (Exception ex) {
+        }
+    }
+
+    public void editrecord() {
+        if (row != -1 && drivers != null && row < drivers.size()) {
+            DriverInfo record = drivers.get(row);
+            CommonOperations.showScreen(getDesktopPane(), new AddNewDriver(record));
+            dispose();
+        }
+        row = -1;
+    }
+
+    public void deleterecord() {
+        ProSound ps = new ProSound();
+        if (row != -1 && drivers != null && row < drivers.size()) {
+            int result = JOptionPane.showConfirmDialog(this, "Are you sure to delete this record", "Message from system", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                DriverInfo record = drivers.get(row);
+                DriverInfoDAO action = new DriverInfoDAO();
+                String message = "";
+                if (action.deleteRecord(record.getDriverid())) {
+                    ps.button();
+                    message = "Record is removed from the database";
+                    bindTables();
+                } else {
+                    ps.computererror();
+                    if (action.getErrormessage().contains("foreign key constraint fails")) {
+                        message = "This record could not be deleted as this is used as a foreign key for other tables.\nIn order to delete,first delete all its content from tables where it is used as a foreign key.";
+                    } else {
+                        message = "Deletion Failure due to:" + action.getErrormessage();
+                    }
+                }
+                JOptionPane.showMessageDialog(this, message);
+            }
+        }
+        row = -1;
+
+    }
+
+    public void bindTables() {
+        drivers = new DriverInfoDAO().getAllRecord();
+        String[] colnames = {"DRIVER ID", "DRIVER NAME", "LICENCE NO.", "EXPIRY DATE", "CONTACT NO.", "ADDRESS"};
+        Object[][] records = null;
+        if (drivers != null && drivers.size() > 0) {
+            records = new Object[drivers.size()][colnames.length];
+            int i = 0;
+            for (DriverInfo di : drivers) {
+                records[i] = new Object[]{di.getDriverid(), di.getDrivername(), di.getLicenceno(), di.getExpirydate(), di.getContactno(), di.getAddress()};
+                i++;
+            }
+        } else {
+            records = new Object[1][colnames.length];
+            records[0] = new Object[]{"No Records", "No Records", "No Records", "No Records", "No Records", "No Records"};
+        }
+        DefaultTableModel dtm = new DefaultTableModel(records, colnames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tableDriverDetails.getTableHeader().setReorderingAllowed(false);
+        tableDriverDetails.setAutoCreateRowSorter(true);
+        tableDriverDetails.setModel(dtm);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableDriverDetails = new javax.swing.JTable();
+        btnLoad = new javax.swing.JButton();
+        btnReport = new javax.swing.JButton();
+
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("View Driver Details");
+
+        tableDriverDetails.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableDriverDetails.setToolTipText("");
+        tableDriverDetails.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDriverDetailsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableDriverDetails);
+
+        btnLoad.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        btnLoad.setText("Load Again");
+        btnLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadActionPerformed(evt);
+            }
+        });
+
+        btnReport.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        btnReport.setText("Generate Report");
+        btnReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(84, 84, 84)
+                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 45, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
+        ProSound ps = new ProSound();
+        ps.button();
+        bindTables();
+    }//GEN-LAST:event_btnLoadActionPerformed
+
+    private void tableDriverDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDriverDetailsMouseClicked
+        if (evt.getButton() == MouseEvent.BUTTON3) {
+            int rowpoint = tableDriverDetails.rowAtPoint(evt.getPoint());
+            tableDriverDetails.getSelectionModel().setSelectionInterval(rowpoint, rowpoint);
+            popup.show(tableDriverDetails, evt.getX(), evt.getY());
+            row = tableDriverDetails.getSelectedRow();
+        }
+    }//GEN-LAST:event_tableDriverDetailsMouseClicked
+
+    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
+        ProSound ps = new ProSound();
+        ps.button();
+        int result = JOptionPane.showConfirmDialog(this, "Do you want to generate all records ?", "Message from system", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            String path = "E:/FreightTransportationSystem/build/classes/reports/viewdriver.jrxml";
+            JasperReportGenerator jrg = new JasperReportGenerator(path);
+            jrg.generateReport();
+        } else {
+            CommonOperations.showScreen(getDesktopPane(), new SpecificDriver());
+        }
+    }//GEN-LAST:event_btnReportActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLoad;
+    private javax.swing.JButton btnReport;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableDriverDetails;
+    // End of variables declaration//GEN-END:variables
+}

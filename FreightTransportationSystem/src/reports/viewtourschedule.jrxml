@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="1000" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="87631d99-3f5b-43d2-a0a9-9bcd10776ce1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+        
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     tourschedule.`SID` AS tourschedule_SID,
+     tourschedule.`truckno` AS tourschedule_truckno,
+     tourschedule.`customername` AS tourschedule_customername,
+     tourschedule.`driverid` AS tourschedule_driverid,
+     tourschedule.`address` AS tourschedule_address,
+     tourschedule.`contactno` AS tourschedule_contactno,
+     tourschedule.`tourdate` AS tourschedule_tourdate,
+     tourschedule.`charges` AS tourschedule_charges,
+     tourschedule.`noofdays` AS tourschedule_noofdays,
+     driverinfo.`driverid` AS driverinfo_driverid,
+     driverinfo.`drivername` AS driverinfo_drivername,
+     driverinfo.`licenceno` AS driverinfo_licenceno,
+     driverinfo.`expirydate` AS driverinfo_expirydate,
+     driverinfo.`contactno` AS driverinfo_contactno,
+     driverinfo.`address` AS driverinfo_address
+FROM
+     `driverinfo` driverinfo INNER JOIN `tourschedule` tourschedule ON driverinfo.`driverid` = tourschedule.`driverid`]]>
+	</queryString>
+	<field name="tourschedule_SID" class="java.lang.Integer"/>
+	<field name="tourschedule_truckno" class="java.lang.String"/>
+	<field name="tourschedule_customername" class="java.lang.String"/>
+	<field name="driverinfo_drivername" class="java.lang.String"/>
+        <field name="driverinfo_driverid" class="java.lang.Integer"/>
+	<field name="tourschedule_address" class="java.lang.String"/>
+	<field name="tourschedule_contactno" class="java.lang.String"/>
+	<field name="tourschedule_tourdate" class="java.sql.Date"/>
+	<field name="tourschedule_charges" class="java.lang.Float"/>
+	<field name="tourschedule_noofdays" class="java.lang.Integer"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="1000" height="92" backcolor="#008DD4" uuid="e7a5c97d-b793-4d5f-82b3-ce0f13a5aab9"/>
+				<staticText>
+					<reportElement x="20" y="20" width="366" height="43" forecolor="#FFFFFF" uuid="16c00ac8-6a89-465b-827e-60bc55b94333"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tour Schedule Details]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="800" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="5e42898c-0642-4691-b7a7-73dfd333b53c"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Tour Schedule Details]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="1000" height="1" forecolor="#666666" uuid="dd0fb3db-e893-4524-889c-2ae8593e734c"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="50" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="09a68238-b295-4447-b8c5-36009eba1724"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="549dd4a3-6c31-4b55-bcce-3e3da4e850be"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRUCK NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="142" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b24a9163-4b45-40a7-9842-e1972bad16b3"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUSTOMER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="253" y="0" width="121" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="366c6a05-c597-48ce-871e-383258667627"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DRIVER NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="374" y="0" width="150" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="8732749f-5047-4d12-b44c-e7be8e24205f"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADDRESS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="524" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="ae49df9a-9a51-443a-abac-d5b52e889d6d"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTACT NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="635" y="0" width="143" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="3f80d94c-d38a-4536-8970-654b39a67810"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOUR DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="778" y="0" width="88" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="161f50dc-3d2d-4b0e-b6bf-29b7acaf07c0"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CHARGES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="866" y="0" width="95" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="2c6e4973-8f98-4575-88cc-58a83e1784e2"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO. OF DAYS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="1000" height="1" uuid="c3abcb11-1d3e-491a-9bfa-3128ca1049ba"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="50" height="20" uuid="677b1a15-f674-4534-89fa-ef56fcda3de5"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourschedule_SID}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="50" y="0" width="92" height="20" uuid="b82918b4-9144-4fa6-9077-2847aa52edcf"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourschedule_truckno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="142" y="0" width="111" height="20" uuid="97d93f96-b1cc-48c5-8a6c-41a51e8a7436"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourschedule_customername}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="253" y="0" width="121" height="20" uuid="4b1ea8ed-4c46-4b56-bab7-8d573d56a9c1"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{driverinfo_drivername}+"["+$F{driverinfo_driverid}+"]"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="374" y="0" width="150" height="20" uuid="971cedb0-472f-44f6-aae8-29cb08e3c98c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourschedule_address}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="524" y="0" width="111" height="20" uuid="b768e467-0580-4571-ba12-f77126680b97"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourschedule_contactno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd">
+				<reportElement x="635" y="0" width="143" height="20" uuid="fe44fc87-5e31-4d4a-b29d-2de5d4899d48"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourschedule_tourdate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="778" y="0" width="88" height="20" uuid="26861be6-b69d-4228-ba0b-7b3da91cc7d7"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourschedule_charges}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="866" y="0" width="95" height="20" uuid="726e0c32-d396-486f-b110-22f24db2033c"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourschedule_noofdays}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="920" height="13" backcolor="#E6E6E6" uuid="98201fec-e64a-4621-858a-3f4fd0c7bc1b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="920" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="2282d275-3cc1-4da6-8890-ff982e149c91"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="fc5be43c-7179-454a-8d96-9160d1e27a46"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

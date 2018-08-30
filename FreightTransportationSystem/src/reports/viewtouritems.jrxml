@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df0da9ab-a649-426d-baed-f1ac840ff008">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     touritems.`TIID` AS touritems_TIID,
+     touritems.`SID` AS touritems_SID,
+     touritems.`itemid` AS touritems_itemid,
+     touritems.`quantity` AS touritems_quantity,
+     iteminfo.`itemid` AS iteminfo_itemid,
+     iteminfo.`itemname` AS iteminfo_itemname,
+     tourschedule.`SID` AS tourschedule_SID,
+     tourschedule.`customername` AS tourschedule_customername
+FROM
+     `iteminfo` iteminfo INNER JOIN `touritems` touritems ON iteminfo.`itemid` = touritems.`itemid`
+     INNER JOIN `tourschedule` tourschedule ON touritems.`SID` = tourschedule.`SID`]]>
+	</queryString>
+	<field name="touritems_TIID" class="java.lang.Integer"/>
+	<field name="tourschedule_customername" class="java.lang.String"/>
+        <field name="tourschedule_SID" class="java.lang.Integer"/>
+	<field name="iteminfo_itemname" class="java.lang.String"/>
+        <field name="iteminfo_itemid" class="java.lang.Integer"/>
+	<field name="touritems_quantity" class="java.lang.Integer"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#008DD4" uuid="10cced3e-666c-4e4a-a4fe-74333dbd8b03"/>
+				<staticText>
+					<reportElement x="20" y="20" width="288" height="43" forecolor="#FFFFFF" uuid="f11060da-faa8-42d4-a2f7-37e054479703"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tour Item Details]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="425b0f06-a8f8-4d11-8f7c-5f595076db2f"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Tour Item Details]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="240bb907-63f5-4d6c-8c58-bd79ade1e6f8"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="78" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="ac884142-51c4-40f7-8588-38678a386cab"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="78" y="0" width="168" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6b5d632b-dfd3-4d67-8553-07170ed3776d"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUSTOMER NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="246" y="0" width="183" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="1e02b39d-0d64-47a8-b6e1-7f490ca3638c"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ITEM NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="419" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="15a552d3-6750-454f-b5ae-021835f415f1"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QUANTITY]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="f3e41eb6-9dbb-4d5e-b82a-7aca9ba0344e"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="78" height="20" uuid="ee853a80-a8c0-46d4-8458-f4d740c19c3a"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{touritems_TIID}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="78" y="0" width="168" height="20" uuid="4f4baa02-3d50-476b-97b5-e5fe166dce32"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourschedule_customername}+"["+$F{tourschedule_SID}+"]"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="246" y="0" width="183" height="20" uuid="109b8879-456b-4ab4-9076-4c72eb5429eb"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{iteminfo_itemname}+"["+$F{iteminfo_itemid}+"]"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="419" y="0" width="138" height="20" uuid="656641aa-d6e1-4578-b6be-af1f478468f3"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{touritems_quantity}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="1d5d5aad-de17-45d4-a76d-2e046511998c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="553b1a48-d7f3-44fa-9b3c-5b06be970da8"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="4f860871-fa18-44ac-9395-66f11cd41850"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

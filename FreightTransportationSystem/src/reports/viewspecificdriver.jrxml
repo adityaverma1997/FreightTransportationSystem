@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="850" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a857f7c4-c8bc-4553-bfc1-38b982bae350">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="value" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     driverinfo.`driverid` AS driverinfo_driverid,
+     driverinfo.`drivername` AS driverinfo_drivername,
+     driverinfo.`licenceno` AS driverinfo_licenceno,
+     driverinfo.`expirydate` AS driverinfo_expirydate,
+     driverinfo.`contactno` AS driverinfo_contactno,
+     driverinfo.`address` AS driverinfo_address
+FROM
+     `driverinfo` driverinfo where driverid=$P{value}]]>
+	</queryString>
+	<field name="driverinfo_driverid" class="java.lang.Integer"/>
+	<field name="driverinfo_drivername" class="java.lang.String"/>
+	<field name="driverinfo_licenceno" class="java.lang.String"/>
+	<field name="driverinfo_expirydate" class="java.sql.Date"/>
+	<field name="driverinfo_contactno" class="java.lang.String"/>
+	<field name="driverinfo_address" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="850" height="92" backcolor="#008DD4" uuid="a38ef397-6d79-44b4-bd3c-bdb62acf41b2"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="0c9ec448-5a40-455d-8e0f-6f6efd326b05"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Driver Details]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="380" height="20" forecolor="#FFFFFF" uuid="13718d2f-a940-408c-b83b-1f9d8b4264b0"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Driver Details]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="850" height="1" forecolor="#666666" uuid="1366af15-6136-4ead-a4b3-be927aa61f2e"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="67c7fcc5-6c19-4a89-9956-51561c3e7e15"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DRIVER ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="92" y="0" width="150" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d5e42d74-3fa9-4715-abee-7cc7ab6859ad"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DRIVER NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="242" y="0" width="150" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="eb092e05-6cad-4072-a13f-f0ec7847a540"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LICENCE NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="392" y="0" width="150" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a7ac899d-c6a8-4d5c-9d31-5691af1538af"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXPIRY DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="542" y="0" width="150" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="313de4d2-a378-41cb-88a8-92851bfd3f73"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTACT NO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="692" y="0" width="120" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="15e76f90-727c-437a-ad82-e14b68b6d2a1"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADDRESS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="815" height="1" uuid="a588b4ca-c110-484e-9250-4d369cef34e8"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="92" height="20" uuid="0d459d96-fe88-4ae1-b7a7-84483d6c2181"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{driverinfo_driverid}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="92" y="0" width="150" height="20" uuid="4ec14c0e-2f81-4c64-88c7-0ec3c86ace19"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{driverinfo_drivername}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="242" y="0" width="150" height="20" uuid="61a819d3-fdfc-4410-ba0a-f0cb8bb49a7b"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{driverinfo_licenceno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="yyyy-MM-dd">
+				<reportElement x="392" y="0" width="150" height="20" uuid="3cde0ce2-06de-40ed-b626-38fe26579da0"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{driverinfo_expirydate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="542" y="0" width="150" height="20" uuid="3b93ca1a-6e90-4fd4-9780-7d36080e48e7"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{driverinfo_contactno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="692" y="0" width="120" height="20" uuid="08d5ef6b-b97b-4d76-8829-9e6cb75fd317"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{driverinfo_address}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="772" height="13" backcolor="#E6E6E6" uuid="662f7cc0-0a08-405b-9a9f-c1601ff95ddd"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="772" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="5d7db613-8800-4f8d-8b35-387515fcb24a"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="c0f946f2-92e6-4903-8496-bf95987d3691"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

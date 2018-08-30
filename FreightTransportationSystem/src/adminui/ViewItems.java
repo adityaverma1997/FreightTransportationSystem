@@ -1,0 +1,240 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package adminui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.table.DefaultTableModel;
+import model.dao.ItemInfoDAO;
+import model.to.ItemInfo;
+import reports.JasperReportGenerator;
+import sound.ProSound;
+import specificreports.SpecificItem;
+import utility.CommonOperations;
+
+/**
+ *
+ * @author ADITYA
+ */
+public class ViewItems extends javax.swing.JInternalFrame {
+
+    List<ItemInfo> iteminfo;
+    private JPopupMenu popup;
+    private int row;
+
+    public ViewItems() {
+        initComponents();
+        bindTables();
+        popup = new JPopupMenu();
+        JMenuItem deleteitem = new JMenuItem("Delete this record");
+        JMenuItem edititem = new JMenuItem("Edit this record");
+        popup.add(deleteitem);
+        popup.add(edititem);
+        deleteitem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleterecord();
+            }
+        });
+        edititem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editrecord();
+            }
+        });
+        row = -1;
+        try {
+            ImageIcon icon, icone;
+            icon = new ImageIcon(getClass().getResource("/adminui/delete.png"));
+            icone = new ImageIcon(getClass().getResource("/adminui/edit.png"));
+            edititem.setIcon(icone);
+            deleteitem.setIcon(icon);
+        } catch (Exception ex) {
+        }
+    }
+
+    public void editrecord() {
+        if (row != -1 && iteminfo != null && row < iteminfo.size()) {
+            ItemInfo record = iteminfo.get(row);
+            CommonOperations.showScreen(getDesktopPane(), new AddNewItem(record));
+            dispose();
+        }
+        row = -1;
+    }
+
+    public void deleterecord() {
+        ProSound ps = new ProSound();
+        if (row != -1 && iteminfo != null && row < iteminfo.size()) {
+            int result = JOptionPane.showConfirmDialog(this, "Are you sure to delete this record", "Message from system", JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                ItemInfo record = iteminfo.get(row);
+                ItemInfoDAO action = new ItemInfoDAO();
+                String message = "";
+                if (action.deleteRecord(record.getItemid())) {
+                    ps.button();
+                    message = "Record is removed from the database";
+                    bindTables();
+                } else {
+                    ps.computererror();
+                    if (action.getErrormessage().contains("foreign key constraint fails")) {
+                        message = "This record could not be deleted as this is used as a foreign key for other tables.\nIn order to delete,first delete all its content from tables where it is used as a foreign key.";
+                    } else {
+                        message = "Deletion Failure due to:" + action.getErrormessage();
+                    }
+                }
+                JOptionPane.showMessageDialog(this, message);
+            }
+        }
+        row = -1;
+
+    }
+
+    public void bindTables() {
+        iteminfo = new ItemInfoDAO().getAllRecord();
+        String[] colnames = {"ITEM ID", "CATEGORY NAME", "ITEM NAME", "WEIGHT", "MANUFACTURER NAME"};
+        Object[][] records = null;
+        if (iteminfo != null && iteminfo.size() > 0) {
+            records = new Object[iteminfo.size()][colnames.length];
+            int i = 0;
+            for (ItemInfo ii : iteminfo) {
+                records[i] = new Object[]{ii.getItemid(), ii.getCategoryname(), ii.getItemname(), ii.getWeight(), ii.getName() + "[" + ii.getMID() + "]"};
+                i++;
+            }
+        } else {
+            records = new Object[1][colnames.length];
+            records[0] = new Object[]{"No Record", "No Record", "No Record", "No Record", "No Record"};
+        }
+        DefaultTableModel dtm = new DefaultTableModel(records, colnames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tableItemDetails.getTableHeader().setReorderingAllowed(false);
+        tableItemDetails.setAutoCreateRowSorter(true);
+        tableItemDetails.setModel(dtm);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        table = new javax.swing.JScrollPane();
+        tableItemDetails = new javax.swing.JTable();
+        btnLoad = new javax.swing.JButton();
+        btnReport = new javax.swing.JButton();
+
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("Vew Item Details");
+
+        tableItemDetails.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableItemDetails.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableItemDetailsMouseClicked(evt);
+            }
+        });
+        table.setViewportView(tableItemDetails);
+
+        btnLoad.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        btnLoad.setText("Load Again");
+        btnLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadActionPerformed(evt);
+            }
+        });
+
+        btnReport.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        btnReport.setText("Generate Report");
+        btnReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(table, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(table, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadActionPerformed
+        ProSound ps = new ProSound();
+        ps.button();
+        bindTables();
+    }//GEN-LAST:event_btnLoadActionPerformed
+
+    private void tableItemDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableItemDetailsMouseClicked
+        if (evt.getButton() == MouseEvent.BUTTON3) {
+            int rowpoint = tableItemDetails.rowAtPoint(evt.getPoint());
+            tableItemDetails.getSelectionModel().setSelectionInterval(rowpoint, rowpoint);
+            popup.show(tableItemDetails, evt.getX(), evt.getY());
+            row = tableItemDetails.getSelectedRow();
+        }
+    }//GEN-LAST:event_tableItemDetailsMouseClicked
+
+    private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
+        ProSound ps = new ProSound();
+        ps.button();
+        int result = JOptionPane.showConfirmDialog(this, "Do you want to generate all records ?", "Message from system", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            String path = "E:/FreightTransportationSystem/build/classes/reports/viewitem.jrxml";
+            JasperReportGenerator jrg = new JasperReportGenerator(path);
+            jrg.generateReport();
+        } else {
+            CommonOperations.showScreen(getDesktopPane(), new SpecificItem());
+        }
+    }//GEN-LAST:event_btnReportActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLoad;
+    private javax.swing.JButton btnReport;
+    private javax.swing.JScrollPane table;
+    private javax.swing.JTable tableItemDetails;
+    // End of variables declaration//GEN-END:variables
+}
